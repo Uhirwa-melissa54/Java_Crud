@@ -2,8 +2,12 @@ package crud;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class Main {
+    private static int result=0;
     public static void main(String[] args) {
         JFrame frame1 = new JFrame();
         frame1.setSize(650, 550);
@@ -63,12 +67,30 @@ public class Main {
         panel1.add(field1);
         panel1.add(field2);
         panel1.add(field3);
+        //database connection
+        Connection conn=ConnectDatabase.connect();
+
 
         // Buttons
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
         buttons.setBounds(10, 300, 600, 50);
-        buttons.add(new JButton("Add"));
+        JButton addButton=new JButton("Add");
+        buttons.add(addButton);
+
+        addButton.addActionListener(e -> {
+            String fullnames=name1.getText();
+            String location3=location.getText();
+            String school1=school.getText();
+            System.out.println(fullnames + location3 + school1);
+            result=Create.create(fullnames,location3,school1,conn);
+
+        });
+        if(result!=0){
+            System.out.println(result + "records inserted in database");
+        }
+
+
         buttons.add(new JButton("Update"));
         buttons.add(new JButton("Delete"));
         buttons.add(new JButton("New"));
@@ -79,7 +101,10 @@ public class Main {
 
         frame1.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame1.setVisible(true);
-        ConnectDatabase.connect();
+
+
+
+
 
     }
 }
