@@ -82,7 +82,6 @@ public class Main {
             String fullnames=name1.getText();
             String location3=location.getText();
             String school1=school.getText();
-            System.out.println(fullnames + location3 + school1);
             result=Create.create(fullnames,location3,school1,conn);
 
         });
