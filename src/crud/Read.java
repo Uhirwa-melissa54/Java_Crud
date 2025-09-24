@@ -1,6 +1,4 @@
 package crud;
-
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,10 +9,14 @@ public class Read {
         try {
             PreparedStatement retrieve = conn.prepareStatement("SELECT * FROM students");
             ResultSet result = retrieve.executeQuery();
+            return result;
         }
         catch(SQLException e){
-            e.printStackTrace();cd
+            System.out.println("Error retrieving data");
+            e.printStackTrace();
+            return null;
         }
+
 
 
 

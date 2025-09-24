@@ -1,13 +1,17 @@
 package crud;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.xml.transform.Result;
 import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Main {
     private static int result=0;
+    private static ResultSet res=null;
     public static void main(String[] args) {
         JFrame frame1 = new JFrame();
         frame1.setSize(650, 550);
@@ -68,9 +72,7 @@ public class Main {
         panel1.add(field2);
         panel1.add(field3);
         //database connection
-        Connection conn=ConnectDatabase.connect();
-
-
+            Connection conn = ConnectDatabase.connect();
         // Buttons
         JPanel buttons = new JPanel();
         buttons.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 0));
@@ -89,10 +91,44 @@ public class Main {
             System.out.println(result + "records inserted in database");
         }
 
+        //add datamodel
+        DefaultTableModel model=new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Name");
+        model.addColumn("Location");
+        model.addColumn("School");
 
+        //create table
+        JTable table=new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10,400,500,450);
+
+
+        //buttons
+        JButton readButton=new JButton("Retrieve");
+        buttons.add(readButton);
+        readButton.addActionListener(e->{
+            res=Read.read(conn);
+            try {
+                while (res.next()) {
+                    int id = res.getInt("id");
+                    String name2 = res.getString("name");
+                    String location2 = res.getString("location");
+                    String school2 = res.getString("school");
+                    model.addRow(new Object[]{id,name2,location2,school2});
+                    frame1.add(scrollPane);
+
+                }
+            }
+            catch(SQLException f){
+                System.out.println("Can not read from database");
+                f.printStackTrace();
+            }
+
+        });
         buttons.add(new JButton("Update"));
         buttons.add(new JButton("Delete"));
-        buttons.add(new JButton("New"));
+
 
         // Add panels to frame
         frame1.add(panel1);
