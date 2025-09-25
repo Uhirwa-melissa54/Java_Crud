@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 public class Main {
     private static int result=0;
-    private static ResultSet res=null;
     public static void main(String[] args) {
         JFrame frame1 = new JFrame();
         frame1.setSize(650, 550);
@@ -80,17 +79,6 @@ public class Main {
         JButton addButton=new JButton("Add");
         buttons.add(addButton);
 
-        addButton.addActionListener(e -> {
-            String fullnames=name1.getText();
-            String location3=location.getText();
-            String school1=school.getText();
-            result=Create.create(fullnames,location3,school1,conn);
-
-        });
-        if(result!=0){
-            System.out.println(result + "records inserted in database");
-        }
-
         //add datamodel
         DefaultTableModel model=new DefaultTableModel();
         model.addColumn("ID");
@@ -101,36 +89,40 @@ public class Main {
         //create table
         JTable table=new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10,400,500,450);
+        scrollPane.setBounds(10,400,500,200);
 
 
         //buttons
         JButton readButton=new JButton("Retrieve");
         buttons.add(readButton);
         readButton.addActionListener(e->{
-            res=Read.read(conn);
-            try {
-                while (res.next()) {
-                    int id = res.getInt("id");
-                    String name2 = res.getString("name");
-                    String location2 = res.getString("location");
-                    String school2 = res.getString("school");
-                    model.addRow(new Object[]{id,name2,location2,school2});
-                    frame1.add(scrollPane);
-
-                }
-            }
-            catch(SQLException f){
-                System.out.println("Can not read from database");
-                f.printStackTrace();
-            }
-
+            NewTable.newTable(conn,model);
         });
+
+
+        addButton.addActionListener(e -> {
+            String fullnames=name1.getText();
+            String location3=location.getText();
+            String school1=school.getText();
+            if(!fullnames.trim().isEmpty() && !location3.trim().isEmpty() && !school1.trim().isEmpty()){
+                result=Create.create(fullnames,location3,school1,conn);
+                NewTable.newTable(conn,model);
+
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"All fields are required", "Error",JOptionPane.ERROR_MESSAGE);
+
+            }
+        });
+        if(result!=0){
+            System.out.println(result + "records inserted in database");
+        }
         buttons.add(new JButton("Update"));
         buttons.add(new JButton("Delete"));
 
 
         // Add panels to frame
+        frame1.add(scrollPane);
         frame1.add(panel1);
         frame1.add(buttons);
 
