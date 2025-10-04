@@ -89,14 +89,14 @@ public class Main {
         //create table
         JTable table=new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10,400,500,200);
+        scrollPane.setBounds(10,400,500,200cd );
 
 
         //buttons
         JButton readButton=new JButton("Retrieve");
         buttons.add(readButton);
         readButton.addActionListener(e->{
-            NewTable.newTable(conn,model);
+            NewTable.newTable(conn,model,Read.read(conn));
         });
 
 
@@ -106,7 +106,7 @@ public class Main {
             String school1=school.getText();
             if(!fullnames.trim().isEmpty() && !location3.trim().isEmpty() && !school1.trim().isEmpty()){
                 result=Create.create(fullnames,location3,school1,conn);
-                NewTable.newTable(conn,model);
+                NewTable.newTable(conn,model,Read.read(conn));
 
             }
             else{

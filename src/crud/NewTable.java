@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 public class NewTable {
     private static ResultSet res=null;
-    public static void newTable(Connection conn, DefaultTableModel model){
+    public static void newTable(Connection conn, DefaultTableModel model,ResultSet res){
         model.setRowCount(0);
-        res=Read.read(conn);
+
         try {
             while (res.next()) {
                 int id = res.getInt("id");
