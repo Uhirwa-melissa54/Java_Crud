@@ -65,11 +65,35 @@ public class Main {
         school.setBounds(90, 0, 200, 25);
         field3.add(label5);
         field3.add(school);
+        //searchId field
+        JPanel searchById=new JPanel(null);
+        searchById.setBounds(350,80,200,100);
+        JTextField idSearch=new JTextField();
+        idSearch.setBounds(0,0,100,20);
+        JButton idSearchButton=new JButton("Search_ID");
+        idSearchButton.setBounds(0,20,100,20);
+        searchById.add(idSearch);
+        searchById.add(idSearchButton);
+
+        //searchName field
+        JPanel searchByName=new JPanel(null);
+        searchByName.setBounds(500,80,200,100);
+        JTextField nameSearch=new JTextField();
+        idSearch.setBounds(0,0,100,20);
+        JButton nameSearchButton=new JButton("Search_Name");
+        idSearchButton.setBounds(0,20,100,20);
+        searchByName.add(nameSearch);
+        searchByName.add(nameSearchButton);
+
+
+
 
         // Add fields to panel
         panel1.add(field1);
         panel1.add(field2);
         panel1.add(field3);
+        panel1.add(searchById);
+        panel1.add(searchByName);
         //database connection
             Connection conn = ConnectDatabase.connect();
         // Buttons
@@ -89,10 +113,18 @@ public class Main {
         //create table
         JTable table=new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10,400,500,200cd );
+        scrollPane.setBounds(10,400,500,200 );
 
 
         //buttons
+        idSearchButton.addActionListener(e->{
+            int id=Integer.parseInt(idSearch.getText());
+            NewTable.newTable(conn,model,Search.search(conn,id));
+        });
+        nameSearchButton.addActionListener(e->{
+            String name=idSearch.getText();
+            NewTable.newTable(conn,model,Search.searchByName(conn,name));
+        });
         JButton readButton=new JButton("Retrieve");
         buttons.add(readButton);
         readButton.addActionListener(e->{
