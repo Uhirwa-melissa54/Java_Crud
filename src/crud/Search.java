@@ -10,9 +10,13 @@ public class Search {
     public  static ResultSet search(Connection conn,int id){
         try {
             PreparedStatement stm1 = conn.prepareStatement("Select * from students where id=?");
-            stm1.setInt(1,id);
-            ResultSet res= stm1.executeQuery();
-            return res;
+            stm1.setInt(1, id);
+            ResultSet res = stm1.executeQuery();
+            if (!res.next()) {
+                System.out.println("No student found with ID " + id);
+            }
+                return res;
+
         }
         catch (SQLException e){
             System.out.println("Searching failed");

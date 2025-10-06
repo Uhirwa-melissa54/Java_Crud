@@ -70,10 +70,12 @@ public class Main {
         searchById.setBounds(350,80,200,100);
         JTextField idSearch=new JTextField();
         idSearch.setBounds(0,0,100,20);
+        searchById.add(idSearch);
         JButton idSearchButton=new JButton("Search_ID");
         idSearchButton.setBounds(0,20,100,20);
-        searchById.add(idSearch);
         searchById.add(idSearchButton);
+
+
 
         //searchName field
         JPanel searchByName=new JPanel(null);
@@ -162,7 +164,7 @@ public class Main {
                 Update.updateLocation(conn,newLocation,newName);
             }
             else{
-                JOptionPane.showMessageDialog(null,"You must atleat provide name and new Location  to update Location","Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null,"You must atleast provide name and new Location  to update Location","Error",JOptionPane.ERROR_MESSAGE);
             }
         });
         buttons.add(updateLocation);
