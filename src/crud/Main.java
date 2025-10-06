@@ -166,8 +166,18 @@ public class Main {
             }
         });
         buttons.add(updateLocation);
+        JButton delete=new JButton("Delete");
+        delete.addActionListener(e->{
+            String name=name1.getText();
+            if(!name.trim().isEmpty()){
+                Delete.delete(conn,name);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Provide name of who you want to delete","Error",JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
-        buttons.add(new JButton("Delete"));
+       buttons.add(delete);
 
 
         // Add panels to frame
