@@ -84,10 +84,6 @@ public class Main {
         idSearchButton.setBounds(0,20,100,20);
         searchByName.add(nameSearch);
         searchByName.add(nameSearchButton);
-
-
-
-
         // Add fields to panel
         panel1.add(field1);
         panel1.add(field2);
@@ -102,7 +98,6 @@ public class Main {
         buttons.setBounds(10, 300, 600, 50);
         JButton addButton=new JButton("Add");
         buttons.add(addButton);
-
         //add datamodel
         DefaultTableModel model=new DefaultTableModel();
         model.addColumn("ID");
@@ -114,8 +109,6 @@ public class Main {
         JTable table=new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(10,400,500,200 );
-
-
         //buttons
         idSearchButton.addActionListener(e->{
             int id=Integer.parseInt(idSearch.getText());
@@ -149,7 +142,31 @@ public class Main {
         if(result!=0){
             System.out.println(result + "records inserted in database");
         }
-        buttons.add(new JButton("Update"));
+        JButton updateSchool=new JButton("UpdateSchool");
+        updateSchool.addActionListener(e->{
+            String newSchool= school.getText();
+            String newName=name1.getText();
+            if(!newSchool.trim().isEmpty() && !newName.trim().isEmpty()){
+                Update.updateSchool(conn,newSchool,newName);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"You must atleat provide name and newschool  to update school","Error",JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        buttons.add(updateSchool);
+        JButton updateLocation=new JButton("UpdateLocation");
+        updateLocation.addActionListener(e->{
+            String newLocation= location.getText();
+            String newName=name1.getText();
+            if(!newLocation.trim().isEmpty() && !newName.trim().isEmpty()){
+                Update.updateLocation(conn,newLocation,newName);
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"You must atleat provide name and new Location  to update Location","Error",JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        buttons.add(updateLocation);
+
         buttons.add(new JButton("Delete"));
 
 
